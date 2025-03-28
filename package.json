@@ -1,7 +1,7 @@
 {
   "name": "comment-hide",
   "displayName": "comment-hide",
-  "description": "The plugin allows you to hide and show comments, and saves them to a specified folder.e",
+  "description": "The plugin allows you to hide and show comments, and saves them to a specified folder.",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.98.0"
