@@ -15,7 +15,9 @@ Windows/Linux HotKey `Ctrl+Shift+P` macOS HotKey `Cmd+Shift+P`
 #### Next?
 
 [  ]: Restore all comments
+
 [  ]: Hide all file comments to the `.annotations/` directory
+
 [  ]: Customize hiding and showing, for example, comment blocks containing `>>>` will not be hidden, while those containing `<<<` will be hidden.
 
 #### Support language
