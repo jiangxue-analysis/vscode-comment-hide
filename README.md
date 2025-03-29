@@ -14,6 +14,9 @@ Windows/Linux HotKey `Ctrl+Shift+P` macOS HotKey `Cmd+Shift+P`
 
 #### Public comments
 
+> [!WARNING]
+> After executing `Save Comments`, **please do not make any changes**, as this will disrupt the line numbers and prevent `Restore Comments` from restoring the comments.
+
 ```
 /* !!!
   This will not be hidden and will be visible to everyone
