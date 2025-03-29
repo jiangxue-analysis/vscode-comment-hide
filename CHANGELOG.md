@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.1.1](https://github.com/jiangxue-analysis/comment-hide/compare/v1.1.0...v1.1.1) (2025-03-29)
+
+
+### Reverts
+
+* add vsix to .gitignore ([a7e0c15](https://github.com/jiangxue-analysis/comment-hide/commit/a7e0c150568ac60bcdd0551d51f3ebdeb969b5a4))
+* del vsix ([24fbee2](https://github.com/jiangxue-analysis/comment-hide/commit/24fbee2522810f74b9a2d7c6401cd7593ff76a72))
+
+
+### Docs
+
+* update README.md ([41839c4](https://github.com/jiangxue-analysis/comment-hide/commit/41839c475b74a26aeeec30a9360357cdff59272d))
+* update README.md warning color ([b752024](https://github.com/jiangxue-analysis/comment-hide/commit/b7520241ce7fc99e2bf08740e5339d7b99ef08e9))
+* update README.md warning size layout ([aaf9027](https://github.com/jiangxue-analysis/comment-hide/commit/aaf902758856c334ce41492e17b4c46997d80aa7))
+
+
+### CI
+
+* add eslint ([1ee9af3](https://github.com/jiangxue-analysis/comment-hide/commit/1ee9af33cfff51292f857ee8c50d02ccb550f84b))
+* use pnpm ([7808f0d](https://github.com/jiangxue-analysis/comment-hide/commit/7808f0d931289f9f57067ba4a80bef734a067e66))
+
 ## [1.1.0](https://github.com/jiangxue-analysis/comment-hide/compare/v1.0.0...v1.1.0) (2025-03-29)
 
 
