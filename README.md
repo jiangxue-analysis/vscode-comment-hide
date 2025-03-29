@@ -16,8 +16,9 @@ If you add the `.annotations/` directory to the `.gitignore` file, anyone withou
 
 #### Public comments
 
-> [!WARNING] 
-> After executing `Save Comments`, **please do not make any changes**, as this will disrupt the line numbers and prevent `Restore Comments` from restoring the comments. 👊 :octocat:🔥
+> <img width="99" alt="Group 816" src="https://github.com/user-attachments/assets/150d5dd1-170d-4ebb-9b5b-b7949cb8eed0" />
+>
+> After executing `Save Comments`, **please do not make any changes**, as this will disrupt the line numbers and prevent `Restore Comments` from restoring the comments. 👊 <img src="https://github.githubassets.com/images/icons/emoji/octocat.png" style="width:20px">🔥
 
 ```js
 /* >>>
