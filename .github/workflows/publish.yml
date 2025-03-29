@@ -23,15 +23,18 @@ jobs:
         with:
           node-version: 18.x
 
+      - name: Install pnpm
+        run: npm install -g pnpm
+
       - name: Install Dependencies
-        run: npm install
+        run: pnpm install
 
       - name: Run Tests (Linux)
-        run: xvfb-run -a npm test
+        run: xvfb-run -a pnpm test
         if: runner.os == 'Linux'
 
       - name: Run Tests (Non-Linux)
-        run: npm test
+        run: pnpm test
         if: runner.os != 'Linux'
 
   publish:
@@ -47,13 +50,16 @@ jobs:
         with:
           node-version: 18.x
 
+      - name: Install pnpm
+        run: npm install -g pnpm
+
       - name: Install Dependencies
-        run: npm install
+        run: pnpm install
 
       - name: Install VSCE
-        run: npm install @vscode/vsce --save-dev
+        run: pnpm add -D @vscode/vsce
 
       - name: Publish Extension
-        run: npm run deploy
+        run: pnpm run deploy
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
