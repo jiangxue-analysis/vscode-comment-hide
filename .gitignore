@@ -1,3 +1,5 @@
 node_modules
 .npmrc
 .annotations
+out
+src/test/extension.test.ts

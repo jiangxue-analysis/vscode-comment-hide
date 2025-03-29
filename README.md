@@ -17,7 +17,7 @@ Windows/Linux HotKey `Ctrl+Shift+P` macOS HotKey `Cmd+Shift+P`
 > [!WARNING] 
 > After executing `Save Comments`, **please do not make any changes**, as this will disrupt the line numbers and prevent `Restore Comments` from restoring the comments. 👊 :octocat:🔥
 
-```
+```js
 /* !!!
   This will not be hidden and will be visible to everyone
 */
@@ -71,10 +71,12 @@ maybe more?
 
 ---
 
-Why no support ''' ?
+[Why no support ''' ?]
 I am lazy
 
-example:
+---
+
+[example:]
 
 {
   // image
@@ -86,7 +88,7 @@ example:
     } */
 }
 
-run `save comments`:
+[run `save comments`:]
 
 {
 
