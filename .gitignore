@@ -3,3 +3,5 @@ node_modules
 .annotations
 out
 src/test/extension.test.ts
+pnpm-lock.yaml
+*.vsix
