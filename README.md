@@ -27,12 +27,12 @@ const x = 42; // This is a comment
 
 run `Save Comments`:
 
-```
+```js
 /* !!!
   This will not be hidden and will be visible to everyone
 */
 
-const x = 42; 
+const x = 42;
 
 
 ```
@@ -47,13 +47,15 @@ const x = 42;
 
 #### Support language
 
-```
-javascript - html - markdown - css - c++ - c# - java - python - golang - rust - ruby
+```js
+javascript - html - markdown - css - c++ - c# - java - python - golang - rust - ruby - jsx/tsx
+---
+maybe more?
 ```
 
 #### Support comments style
 
-```
+```js
 // Hello
 
 # Hello
@@ -68,5 +70,26 @@ javascript - html - markdown - css - c++ - c# - java - python - golang - rust - 
 
 Why no support ''' ?
 I am lazy
+
+example:
+
+{
+  // image
+}
+{
+  /* {isValidImageIcon
+      ? <img src={imageUrl} className="w-full h-full rounded-full" alt="answer icon" />
+      : (icon && icon !== '') ? <em-emoji id={icon} /> : <em-emoji id='🤖' />
+    } */
+}
+
+run `save comments`:
+
+{
+
+}
+{
+
+}
 
 ```
