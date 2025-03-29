@@ -3,7 +3,7 @@
   "displayName": "comment-hide",
   "publisher": "jiangxue-analysis",
   "description": "The plugin allows you to hide and show comments, and saves them to a specified folder.",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "engines": {
     "vscode": "^1.98.0"
   },
