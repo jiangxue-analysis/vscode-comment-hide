@@ -1,4 +1,4 @@
-/* !!!
+/* >>>
     HAHA ദ്ദി˶>𖥦<)✧, My use comment-hide.
     If you don’t believe it, look .gitignore file ദ്ദി˶>𖥦<)✧
 */
@@ -43,7 +43,8 @@ export function activate(context: vscode.ExtensionContext) {
       const fileContent = document.getText();
 
       
-      const exclusionBlockRegex = /\/\*\s*!!![\s\S]*?\*\//g;
+      const exclusionBlockRegex = /\/\*\s*>>>\s*[\s\S]*?\*\//g;
+
       const exclusionRanges: { start: number; end: number }[] = [];
       let exclusionMatch;
       while (

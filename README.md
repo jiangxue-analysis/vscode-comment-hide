@@ -12,13 +12,15 @@ Windows/Linux HotKey `Ctrl+Shift+P` macOS HotKey `Cmd+Shift+P`
 1. Save Comments: Create `.annotations/` storage code comments and **Delete the current file comment** move comments to `.annotations`.
 2. Restore Comments: Restore comments from `.annotations/` to the current file.
 
+If you add the `.annotations/` directory to the `.gitignore` file, anyone without this directory will **be unable to restore your comments**.
+
 #### Public comments
 
 > [!WARNING] 
 > After executing `Save Comments`, **please do not make any changes**, as this will disrupt the line numbers and prevent `Restore Comments` from restoring the comments. 👊 :octocat:🔥
 
 ```js
-/* !!!
+/* >>>
   This will not be hidden and will be visible to everyone
 */
 
@@ -31,7 +33,7 @@ const x = 42; // This is a comment
 run `Save Comments`:
 
 ```js
-/* !!!
+/* >>>
   This will not be hidden and will be visible to everyone
 */
 
@@ -42,11 +44,12 @@ const x = 42;
 
 #### Next?
 
-[  ]: Restore all comments
+[-]: Restore all comments
 
-[  ]: Hide all file comments to the `.annotations/` directory
+[-]: Hide all file comments to the `.annotations/` directory
 
-[  ]: Customize hiding and showing, for example, comment blocks containing `>>>` will not be hidden, while those containing `<<<` will be hidden.
+[√]: Customize hiding and showing, for example, comment blocks containing `>>>` will not be hidden
+- only support `/* */` comments style
 
 #### Support language
 
