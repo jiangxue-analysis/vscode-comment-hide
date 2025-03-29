@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.3](https://github.com/jiangxue-analysis/comment-hide/compare/v1.1.2...v1.1.3) (2025-03-29)
+
+
+### CI
+
+* fix version no publish error ([59843b3](https://github.com/jiangxue-analysis/comment-hide/commit/59843b3594236e6fdfd1b02590d9aa2ac7702450))
+* fix version no publish error ([6765f14](https://github.com/jiangxue-analysis/comment-hide/commit/6765f14115659578713e7f644437842264446c28))
+
 ## [1.1.2](https://github.com/jiangxue-analysis/comment-hide/compare/v1.1.1...v1.1.2) (2025-03-29)
 
 
