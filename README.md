@@ -12,6 +12,31 @@ Windows/Linux HotKey `Ctrl+Shift+P` macOS HotKey `Cmd+Shift+P`
 1. Save Comments: Create `.annotations/` storage code comments and **Delete the current file comment** move comments to `.annotations`.
 2. Restore Comments: Restore comments from `.annotations/` to the current file.
 
+#### Public comments
+
+```
+/* !!!
+  This will not be hidden and will be visible to everyone
+*/
+
+const x = 42; // This is a comment
+/* This is a multi-line
+   comment */
+// Another comment
+```
+
+run `Save Comments`:
+
+```
+/* !!!
+  This will not be hidden and will be visible to everyone
+*/
+
+const x = 42; 
+
+
+```
+
 #### Next?
 
 [  ]: Restore all comments
@@ -23,5 +48,25 @@ Windows/Linux HotKey `Ctrl+Shift+P` macOS HotKey `Cmd+Shift+P`
 #### Support language
 
 ```
-javascript - html
+javascript - html - markdown - css - c++ - c# - java - python - golang - rust - ruby
+```
+
+#### Support comments style
+
+```
+// Hello
+
+# Hello
+
+/*
+  Hello
+*/
+
+<!-- Hello -->
+
+---
+
+Why no support ''' ?
+I am lazy
+
 ```

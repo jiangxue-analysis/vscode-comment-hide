@@ -1,4 +1,8 @@
 "use strict";
+/* !!!
+    HAHA ദ്ദി˶>𖥦<)✧, My use comment-hide.
+    If you don’t believe it, look .gitignore file ദ്ദി˶>𖥦<)✧
+*/
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -37,7 +41,6 @@ exports.activate = activate;
 const vscode = __importStar(require("vscode"));
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
-// create directory exists
 function ensureDirectoryExistence(filePath) {
     const dirname = path.dirname(filePath);
     if (!fs.existsSync(dirname)) {
@@ -53,9 +56,8 @@ function activate(context) {
     const workspaceRoot = workspaceFolders[0].uri.fsPath;
     const commentStorePath = path.join(workspaceRoot, ".annotations");
     if (!fs.existsSync(commentStorePath)) {
-        fs.mkdirSync(commentStorePath); //.annotations
+        fs.mkdirSync(commentStorePath);
     }
-    // [Save Comments]
     const saveCommentsCommand = vscode.commands.registerCommand("extension.saveComments", () => {
         const editor = vscode.window.activeTextEditor;
         if (!editor) {
@@ -65,37 +67,50 @@ function activate(context) {
         const document = editor.document;
         const filePath = document.uri.fsPath;
         const fileContent = document.getText();
-        const commentRegex = /\/\/.*|\/\*[\s\S]*?\*\/|<!--[\s\S]*?-->/g;
-        const comments = [];
-        let match;
-        while ((match = commentRegex.exec(fileContent)) !== null) {
-            const position = document.positionAt(match.index);
-            comments.push({
-                text: match[0],
-                line: position.line,
-                column: position.character,
+        const exclusionBlockRegex = /\/\*\s*!!![\s\S]*?\*\//g;
+        const exclusionRanges = [];
+        let exclusionMatch;
+        while ((exclusionMatch = exclusionBlockRegex.exec(fileContent)) !== null) {
+            exclusionRanges.push({
+                start: exclusionMatch.index,
+                end: exclusionBlockRegex.lastIndex,
             });
         }
-        // File path
+        const commentRegex = /(['"`])(?:\\.|(?!\1).)*?\1|\/(?:\\.|[^\/\r\n])+\/[gimsuy]*|\/\/.*|\/\*[\s\S]*?\*\//gm;
+        const comments = [];
+        const uncommentedCode = fileContent.replace(commentRegex, (match, _, offset) => {
+            const position = document.positionAt(offset);
+            const isExcluded = exclusionRanges.some((range) => offset >= range.start && offset < range.end);
+            if (isExcluded) {
+                return match;
+            }
+            if (match.startsWith("//") ||
+                match.startsWith("/*") ||
+                match.startsWith("<!--") ||
+                match.startsWith("#")) {
+                comments.push({
+                    text: match,
+                    line: position.line,
+                    column: position.character,
+                });
+                return "";
+            }
+            return match;
+        });
         const relativePath = path.relative(workspaceRoot, filePath);
         const commentFilePath = path.join(commentStorePath, `${relativePath}.json`);
-        // is path exists
         ensureDirectoryExistence(commentFilePath);
-        // Save
         const commentData = {
             comments: comments,
             filePath: relativePath,
         };
         fs.writeFileSync(commentFilePath, JSON.stringify(commentData, null, 2));
-        // Remove comments and update the document
-        const uncommentedCode = fileContent.replace(commentRegex, "");
         const edit = new vscode.WorkspaceEdit();
         const fullRange = new vscode.Range(document.positionAt(0), document.positionAt(fileContent.length));
         edit.replace(document.uri, fullRange, uncommentedCode);
         vscode.workspace.applyEdit(edit);
         vscode.window.showInformationMessage("Comments saved locally.");
     });
-    // [Restore Comments]
     const restoreCommentsCommand = vscode.commands.registerCommand("extension.restoreComments", () => {
         const editor = vscode.window.activeTextEditor;
         if (!editor) {
@@ -104,20 +119,16 @@ function activate(context) {
         }
         const document = editor.document;
         const filePath = document.uri.fsPath;
-        // file path
         const relativePath = path.relative(workspaceRoot, filePath);
         const commentFilePath = path.join(commentStorePath, `${relativePath}.json`);
-        // is file exists
         if (!fs.existsSync(commentFilePath)) {
             vscode.window.showErrorMessage("No comments found for this file.");
             return;
         }
-        // Read the comment file and parse it
         const commentData = JSON.parse(fs.readFileSync(commentFilePath, "utf-8"));
         const comments = commentData.comments;
         const fileContent = document.getText();
         const edit = new vscode.WorkspaceEdit();
-        // Insert line
         for (const comment of comments) {
             const position = new vscode.Position(comment.line, comment.column);
             edit.insert(document.uri, position, comment.text);
