@@ -4,3 +4,4 @@ node_modules
 out
 src/test/extension.test.ts
 pnpm-lock.yaml
+*.vsix
