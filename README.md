@@ -18,7 +18,7 @@ If you add the `.annotations/` directory to the `.gitignore` file, anyone withou
 
 > <img width="130" src="https://github.com/user-attachments/assets/20cd1f83-4fdc-45f4-bb6b-23506c56414c" />
 >
-> After executing `Save Comments`, **please do not make any changes**, as this will disrupt the line numbers and prevent `Restore Comments` from restoring the comments. 👊 <img src="https://github.githubassets.com/images/icons/emoji/octocat.png" style="width:20px">🔥
+> After executing `Save Comments`, **please do not make any changes**, as this will disrupt the line numbers and prevent `Restore Comments` from restoring the comments. 👊🐱🔥
 
 ```js
 /* >>>
@@ -48,6 +48,10 @@ const x = 42;
 [-]: Restore all comments
 
 [-]: Hide all file comments to the `.annotations/` directory
+
+[-]: Fix space placeholders after `Save Comments`.
+
+[-]: Fix the absolute positioning issue.
 
 [√]: Customize hiding and showing, for example, comment blocks containing `>>>` will not be hidden
 - only support `/* */` comments style
