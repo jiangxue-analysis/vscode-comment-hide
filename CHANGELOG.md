@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.4](https://github.com/jiangxue-analysis/comment-hide/compare/v1.1.3...v1.1.4) (2025-03-30)
+
+
+### Docs
+
+* fix github icon error and add next version plan ([3f2302d](https://github.com/jiangxue-analysis/comment-hide/commit/3f2302d9da93a0304d511d3ccd864a0bc7a08b57))
+
+
+### CI
+
+* fix version no publish error ([d235f27](https://github.com/jiangxue-analysis/comment-hide/commit/d235f2710dcbc9b018e5da4a7843175a8accc5f6))
+
 ## [1.1.3](https://github.com/jiangxue-analysis/comment-hide/compare/v1.1.2...v1.1.3) (2025-03-29)
 
 
