@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.5](https://github.com/jiangxue-analysis/comment-hide/compare/v1.1.4...v1.1.5) (2025-03-31)
+
+
+### Bug Fixes
+
+* regular expression not select # ([df3348d](https://github.com/jiangxue-analysis/comment-hide/commit/df3348d62ba6ff4a6a8c891f5e9a9beeed257287))
+
 ## [1.1.4](https://github.com/jiangxue-analysis/comment-hide/compare/v1.1.3...v1.1.4) (2025-03-30)
 
 
