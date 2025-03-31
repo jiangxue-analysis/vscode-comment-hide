@@ -1,7 +1,7 @@
 <img alt="logo" style="float: center;right: 0px" src="https://github.com/user-attachments/assets/fe240bc6-5149-4350-bf5c-5a51ea0bd7e4" width="100" div align=right>
 <p></p>
 
-**[Comment Hide]**
+**[comment-hide]**
 
 The plugin allows you to hide and show comments, and saves them to a specified folder.
 
@@ -21,27 +21,39 @@ If you add the `.annotations/` directory to the `.gitignore` file, anyone withou
 > After executing `Save Comments`, **please do not make any changes**, as this will disrupt the line numbers and prevent `Restore Comments` from restoring the comments. 👊🐱🔥
 
 ```js
-/* >>>
-  This will not be hidden and will be visible to everyone
-*/
-
-const x = 42; // This is a comment
-/* This is a multi-line
-   comment */
-// Another comment
+0 /* >>>                                                               
+1   This will not be hidden and will be 2 visible to everyone          
+2 */                                                                   
+3                                                                      
+4 const x = 42; // This is a comment                                   
+5 /* This is a multi-line                                              
+6    comment */                                                        
+7 // Another comment                                                   
 ```
 
 run `Save Comments`:
 
 ```js
-/* >>>
-  This will not be hidden and will be visible to everyone
-*/
-
-const x = 42;
-
-
+1 /* >>>                                                           
+2   This will not be hidden and will be 3 visible to everyone      
+3 */                                                               
+4                                                                  
+5 const x = 42;                                                    
 ```
+
+run `Save Restore`:
+
+```js
+0 /* >>>                                                               
+1   This will not be hidden and will be 2 visible to everyone          
+2 */                                                                   
+3                                                                      
+4 const x = 42; // This is a comment                                   
+5 /* This is a multi-line                                              
+6    comment */                                                        
+7 // Another comment                                                   
+```
+
 
 #### Next?
 
