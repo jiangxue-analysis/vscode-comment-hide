@@ -41,7 +41,38 @@ run `Save Comments`:
 5 const x = 42;                                                    
 ```
 
-run `Save Restore`:
+The `/* */` block remains because comment-hide allows preserving comments using `>>>`. Only block-style `/* */` comments support this feature.
+
+These comments are stored in the `.annotations/` folder at the root directory. You can locate the JSON file by following the current file name.
+
+```json
+{
+  "originalContent": "/* >>>\n  This will not be hidden and will be visible to everyone\n*/\n\nconst x = 42; // This is a comment\n/* This is a multi-line\n   comment */\n// Another comment",
+  "comments": [
+    {
+      "text": "// This is a comment",
+      "line": 4,
+      "start": 83,
+      "end": 103
+    },
+    {
+      "text": "/* This is a multi-line\n   comment */",
+      "line": 5,
+      "start": 104,
+      "end": 141
+    },
+    {
+      "text": "// Another comment",
+      "line": 7,
+      "start": 142,
+      "end": 160
+    }
+  ],
+  "filePath": "test/hhha.js"
+}
+```
+
+To restore comments, run `Restore Comments`, and the plugin will reinsert comments based on line numbers and positions:
 
 ```js
 0 /* >>>                                                               
