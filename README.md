@@ -49,7 +49,7 @@ const x = 42;
 
 [-]: Hide all file comments to the `.annotations/` directory
 
-[-]: Fix space placeholders after `Save Comments`.
+[√]: Fix space placeholders after `Save Comments`.
 
 [-]: Fix the absolute positioning issue.
 

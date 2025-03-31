@@ -1,22 +1,21 @@
 /* >>>
     HAHA ദ്ദി˶>𖥦<)✧, My use comment-hide.
-    If you don’t believe it, look .gitignore file ദ്ദി˶>𖥦<)✧
+    If you don't believe it, look .gitignore file ദ്ദി˶>𖥦<)✧
 */
 
-import * as vscode from "vscode";
-import * as fs from "fs";
-import * as path from "path";
-
+import * as vscode from "vscode"; 
+import * as fs from "fs"; 
+import * as path from "path"; 
 
 function ensureDirectoryExistence(filePath: string) {
   const dirname = path.dirname(filePath);
   if (!fs.existsSync(dirname)) {
-    fs.mkdirSync(dirname, { recursive: true });
+    fs.mkdirSync(dirname, { recursive: true }); 
   }
 }
 
 export function activate(context: vscode.ExtensionContext) {
-  
+
   const workspaceFolders = vscode.workspace.workspaceFolders;
   if (!workspaceFolders) {
     vscode.window.showErrorMessage("No workspace folder found.");
@@ -30,10 +29,10 @@ export function activate(context: vscode.ExtensionContext) {
     fs.mkdirSync(commentStorePath);
   }
 
-  
   const saveCommentsCommand = vscode.commands.registerCommand(
     "extension.saveComments",
     () => {
+
       const editor = vscode.window.activeTextEditor;
       if (!editor) {
         vscode.window.showErrorMessage("No active editor found.");
@@ -41,75 +40,120 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       const document = editor.document;
-      const filePath = document.uri.fsPath;
       const fileContent = document.getText();
 
-      
-      const exclusionBlockRegex = /\/\*\s*>>>\s*[\s\S]*?\*\//g;
+      const stringAndRegexRanges: { start: number; end: number }[] = [];
 
+      const stringAndRegexRegex =
+        /(['"`])(?:\\.|(?!\1).)*?\1|\/(?![*/])(?:\\.|[^\/\r\n])+\/(?:[gimsuy]*)/g;
+      let match: RegExpExecArray | null;
+      while ((match = stringAndRegexRegex.exec(fileContent)) !== null) {
+        stringAndRegexRanges.push({
+          start: match.index,
+          end: stringAndRegexRegex.lastIndex,
+        });
+      }
+
+      const exclusionBlockRegex = /\/\*\s*>>>\s*[\s\S]*?\*\//g;
       const exclusionRanges: { start: number; end: number }[] = [];
-      let exclusionMatch;
-      while (
-        (exclusionMatch = exclusionBlockRegex.exec(fileContent)) !== null
-      ) {
+      while ((match = exclusionBlockRegex.exec(fileContent)) !== null) {
         exclusionRanges.push({
-          start: exclusionMatch.index,
+          start: match.index,
           end: exclusionBlockRegex.lastIndex,
         });
       }
 
-      
-      const commentRegex =
-        /(['"`])(?:\\.|(?!\1).)*?\1|\/(?:\\.|[^\/\r\n])+\/[gimsuy]*|\/\/.*|\/\*[\s\S]*?\*\/|#.*/gm;
+      const commentRegex = /\/\/.*|\/\*[\s\S]*?\*\/|#.*|<!--[\s\S]*?-->/g;
+      const comments: {
+        text: string;
+        line: number;
+        start: number;
+        end: number;
+      }[] = [];
+      let lastIndex = 0;
+      let uncommentedParts: string[] = [];
 
-      const comments: { text: string; line: number; column: number }[] = [];
-      const uncommentedCode = fileContent.replace(
-        commentRegex,
-        (match, _, offset) => {
-          const position = document.positionAt(offset);
+      while ((match = commentRegex.exec(fileContent)) !== null) {
 
-          
-          const isExcluded = exclusionRanges.some(
-            (range) => offset >= range.start && offset < range.end
-          );
-          if (isExcluded) {
-            return match;
-          }
+        const isInProtectedRange = stringAndRegexRanges.some(
+          (range) =>
+            match !== null &&
+            match.index >= range.start &&
+            match.index < range.end
+        );
 
-          
-          if (
-            match.startsWith("//") ||
-            match.startsWith("/*") ||
-            match.startsWith("<!--") ||
-            match.startsWith("#")
-          ) {
-            comments.push({
-              text: match,
-              line: position.line,
-              column: position.character,
-            });
-            return "";
-          }
-          return match;
+        const isExcluded = exclusionRanges.some(
+          (range) =>
+            match !== null &&
+            match.index >= range.start &&
+            match.index < range.end
+        );
+
+        if (!isInProtectedRange && !isExcluded) {
+
+          uncommentedParts.push(fileContent.substring(lastIndex, match.index));
+
+          const startPos = document.positionAt(match.index);
+          comments.push({
+            text: match[0],
+            line: startPos.line,
+            start: match.index,
+            end: commentRegex.lastIndex,
+          });
+
+          lastIndex = commentRegex.lastIndex;
         }
-      );
+      }
 
-      
-      const relativePath = path.relative(workspaceRoot, filePath);
+      uncommentedParts.push(fileContent.substring(lastIndex));
+
+      let uncommentedCode = uncommentedParts.join("");
+
+      const lines = uncommentedCode.split("\n");
+      const processedLines: string[] = [];
+      let lastLineWasEmpty = false;
+
+      lines.forEach((line) => {
+        const trimmed = line.trim();
+        if (trimmed === "") {
+
+          if (!lastLineWasEmpty) {
+            processedLines.push("");
+            lastLineWasEmpty = true;
+          }
+        } else {
+          processedLines.push(line);
+          lastLineWasEmpty = false;
+        }
+      });
+
+      while (processedLines.length > 0 && processedLines[0].trim() === "") {
+        processedLines.shift();
+      }
+      while (
+        processedLines.length > 0 &&
+        processedLines[processedLines.length - 1].trim() === ""
+      ) {
+        processedLines.pop();
+      }
+
+      uncommentedCode = processedLines.join("\n");
+
+      const relativePath = path.relative(workspaceRoot, document.uri.fsPath);
       const commentFilePath = path.join(
         commentStorePath,
         `${relativePath}.json`
       );
-
       ensureDirectoryExistence(commentFilePath);
 
       const commentData = {
-        comments: comments,
-        filePath: relativePath,
+        originalContent: fileContent, 
+        comments: comments, 
+        filePath: relativePath, 
       };
+
       fs.writeFileSync(commentFilePath, JSON.stringify(commentData, null, 2));
 
-      
       const edit = new vscode.WorkspaceEdit();
       const fullRange = new vscode.Range(
         document.positionAt(0),
@@ -118,11 +162,12 @@ export function activate(context: vscode.ExtensionContext) {
       edit.replace(document.uri, fullRange, uncommentedCode);
       vscode.workspace.applyEdit(edit);
 
-      vscode.window.showInformationMessage("Comments saved locally.");
+      vscode.window.showInformationMessage(
+        "Comments removed with precise handling."
+      );
     }
   );
 
-  
   const restoreCommentsCommand = vscode.commands.registerCommand(
     "extension.restoreComments",
     () => {
@@ -146,23 +191,21 @@ export function activate(context: vscode.ExtensionContext) {
         return;
       }
 
-      
       const commentData = JSON.parse(fs.readFileSync(commentFilePath, "utf-8"));
-      const comments = commentData.comments;
 
-      const fileContent = document.getText();
       const edit = new vscode.WorkspaceEdit();
-
-      
-      for (const comment of comments) {
-        const position = new vscode.Position(comment.line, comment.column);
-        edit.insert(document.uri, position, comment.text);
-      }
-
+      const fullRange = new vscode.Range(
+        document.positionAt(0),
+        document.positionAt(document.getText().length)
+      );
+      edit.replace(document.uri, fullRange, commentData.originalContent);
       vscode.workspace.applyEdit(edit);
 
-      vscode.window.showInformationMessage("Comments restored.");
+      vscode.window.showInformationMessage(
+        "Comments and original formatting restored."
+      );
     }
   );
+
   context.subscriptions.push(saveCommentsCommand, restoreCommentsCommand);
 }
