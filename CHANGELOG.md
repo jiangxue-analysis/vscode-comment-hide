@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.8](https://github.com/jiangxue-analysis/comment-hide/compare/v1.1.7...v1.1.8) (2025-03-31)
+
+
+### Docs
+
+* Update README.md fix typo ([ff5e16e](https://github.com/jiangxue-analysis/comment-hide/commit/ff5e16e75c924532f8b1e1c0606b5ae16dce19c4))
+
 ## [1.1.7](https://github.com/jiangxue-analysis/comment-hide/compare/v1.1.6...v1.1.7) (2025-03-31)
 
 
