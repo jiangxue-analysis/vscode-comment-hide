@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.6](https://github.com/jiangxue-analysis/comment-hide/compare/v1.1.5...v1.1.6) (2025-03-31)
+
+
+### Bug Fixes
+
+* space placeholders after Save Comments ([1c5d199](https://github.com/jiangxue-analysis/comment-hide/commit/1c5d199ae4161e36a00c6e5983949668ddaa5234))
+
 ## [1.1.5](https://github.com/jiangxue-analysis/comment-hide/compare/v1.1.4...v1.1.5) (2025-03-31)
 
 
