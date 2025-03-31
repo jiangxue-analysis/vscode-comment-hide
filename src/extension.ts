@@ -16,6 +16,7 @@ function ensureDirectoryExistence(filePath: string) {
 }
 
 export function activate(context: vscode.ExtensionContext) {
+  
   const workspaceFolders = vscode.workspace.workspaceFolders;
   if (!workspaceFolders) {
     vscode.window.showErrorMessage("No workspace folder found.");
@@ -26,9 +27,10 @@ export function activate(context: vscode.ExtensionContext) {
   const commentStorePath = path.join(workspaceRoot, ".annotations");
 
   if (!fs.existsSync(commentStorePath)) {
-    fs.mkdirSync(commentStorePath); 
+    fs.mkdirSync(commentStorePath);
   }
 
+  
   const saveCommentsCommand = vscode.commands.registerCommand(
     "extension.saveComments",
     () => {
@@ -58,35 +60,37 @@ export function activate(context: vscode.ExtensionContext) {
 
       
       const commentRegex =
-        /(['"`])(?:\\.|(?!\1).)*?\1|\/(?:\\.|[^\/\r\n])+\/[gimsuy]*|\/\/.*|\/\*[\s\S]*?\*\//gm;
+        /(['"`])(?:\\.|(?!\1).)*?\1|\/(?:\\.|[^\/\r\n])+\/[gimsuy]*|\/\/.*|\/\*[\s\S]*?\*\/|#.*/gm;
 
       const comments: { text: string; line: number; column: number }[] = [];
       const uncommentedCode = fileContent.replace(
         commentRegex,
         (match, _, offset) => {
           const position = document.positionAt(offset);
+
           
           const isExcluded = exclusionRanges.some(
             (range) => offset >= range.start && offset < range.end
           );
           if (isExcluded) {
-            return match; 
+            return match;
           }
+
           
           if (
-            match.startsWith("//") || 
-            match.startsWith("/*") || 
-            match.startsWith("<!--") || 
-            match.startsWith("#") 
+            match.startsWith("//") ||
+            match.startsWith("/*") ||
+            match.startsWith("<!--") ||
+            match.startsWith("#")
           ) {
             comments.push({
               text: match,
               line: position.line,
               column: position.character,
             });
-            return ""; 
+            return "";
           }
-          return match; 
+          return match;
         }
       );
 
@@ -131,14 +135,12 @@ export function activate(context: vscode.ExtensionContext) {
       const document = editor.document;
       const filePath = document.uri.fsPath;
 
-      
       const relativePath = path.relative(workspaceRoot, filePath);
       const commentFilePath = path.join(
         commentStorePath,
         `${relativePath}.json`
       );
 
-      
       if (!fs.existsSync(commentFilePath)) {
         vscode.window.showErrorMessage("No comments found for this file.");
         return;
