@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.9](https://github.com/jiangxue-analysis/vscode-comment-hide/compare/v1.1.8...v1.1.9) (2025-04-10)
+
+
+### Bug Fixes
+
+* sass comment error add file name function ([cbb30ee](https://github.com/jiangxue-analysis/vscode-comment-hide/commit/cbb30eecb10a46d501fffe44acf96df3274e3291))
+
 ## [1.1.8](https://github.com/jiangxue-analysis/comment-hide/compare/v1.1.7...v1.1.8) (2025-03-31)
 
 
