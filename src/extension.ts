@@ -32,7 +32,6 @@ export function activate(context: vscode.ExtensionContext) {
   const saveCommentsCommand = vscode.commands.registerCommand(
     "extension.saveComments",
     () => {
-
       const editor = vscode.window.activeTextEditor;
       if (!editor) {
         vscode.window.showErrorMessage("No active editor found.");
@@ -41,16 +40,20 @@ export function activate(context: vscode.ExtensionContext) {
 
       const document = editor.document;
       const fileContent = document.getText();
+      const languageId = document.languageId; 
 
       const stringAndRegexRanges: { start: number; end: number }[] = [];
 
-      const stringAndRegexRegex =
-        /(['"`])(?:\\.|(?!\1).)*?\1|\/(?![*/])(?:\\.|[^\/\r\n])+\/(?:[gimsuy]*)/g;
+      const stringRegex =
+        languageId === "scss" || languageId === "css"
+          ? /(['"])(?:\\.|(?!\1).)*?\1/g
+          : /(['"`])(?:\\.|(?!\1).)*?\1|\/(?![*/])(?:\\.|[^\/\r\n])+\/(?:[gimsuy]*)/g;
+
       let match: RegExpExecArray | null;
-      while ((match = stringAndRegexRegex.exec(fileContent)) !== null) {
+      while ((match = stringRegex.exec(fileContent)) !== null) {
         stringAndRegexRanges.push({
           start: match.index,
-          end: stringAndRegexRegex.lastIndex,
+          end: stringRegex.lastIndex,
         });
       }
 
@@ -63,7 +66,16 @@ export function activate(context: vscode.ExtensionContext) {
         });
       }
 
-      const commentRegex = /\/\/.*|\/\*[\s\S]*?\*\/|#.*|<!--[\s\S]*?-->/g;
+      let commentRegex: RegExp;
+      if (languageId === "scss" || languageId === "css") {
+
+        commentRegex =
+          /\/\/.*|\/\*[\s\S]*?\*\/|(^|\s)#(?![\da-fA-F]{3,6}\b).*$/gm;
+      } else {
+
+        commentRegex = /\/\/.*|\/\*[\s\S]*?\*\/|#.*|<!--[\s\S]*?-->/g;
+      }
+
       const comments: {
         text: string;
         line: number;
@@ -74,7 +86,6 @@ export function activate(context: vscode.ExtensionContext) {
       let uncommentedParts: string[] = [];
 
       while ((match = commentRegex.exec(fileContent)) !== null) {
-
         const isInProtectedRange = stringAndRegexRanges.some(
           (range) =>
             match !== null &&
@@ -90,7 +101,6 @@ export function activate(context: vscode.ExtensionContext) {
         );
 
         if (!isInProtectedRange && !isExcluded) {
-
           uncommentedParts.push(fileContent.substring(lastIndex, match.index));
 
           const startPos = document.positionAt(match.index);
